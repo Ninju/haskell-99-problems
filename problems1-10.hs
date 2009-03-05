@@ -9,6 +9,7 @@ lastElement = head . reverse
 
 -- Problem 2
 
+secondLastElement :: [a] -> a
 secondLastElement = head . tail . reverse
 
 -- Problem 9
