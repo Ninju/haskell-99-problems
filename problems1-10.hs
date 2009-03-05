@@ -33,6 +33,11 @@ reverseList = foldl (flip (:)) []
 isPalindrome :: Eq a => [a] -> Bool
 isPalindrome xs = xs == reverse xs
 
+-- Problem 8
+
+compress :: Eq a => [a] -> [a]
+compress = map head . groupDuplicates
+
 -- Problem 9
 
 groupDuplicates :: Eq a => [a] -> [[a]]
