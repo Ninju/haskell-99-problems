@@ -2,6 +2,11 @@ module Main where
 
 -- Solutions for Problems 1-10
 
+-- Problem 1
+ 
+lastElement :: [a] -> a
+lastElement = head . reverse
+
 
 -- Problem 9
 
