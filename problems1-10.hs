@@ -1,4 +1,5 @@
 module Main where
+import Data.List (foldl')
 
 -- Solutions for Problems 1-10
 
@@ -16,6 +17,11 @@ secondLastElement = head . tail . reverse
 
 elementAt :: Int -> [a] -> a
 elementAt n = head . drop (n-1)
+
+-- Problem 4
+
+listLength :: [a] -> Integer
+listLength = foldl' (\n _ -> 1 + n) 0
 
 -- Problem 9
 
