@@ -12,6 +12,11 @@ lastElement = head . reverse
 secondLastElement :: [a] -> a
 secondLastElement = head . tail . reverse
 
+-- Problem 3
+
+elementAt :: Int -> [a] -> a
+elementAt n = head . drop (n-1)
+
 -- Problem 9
 
 groupDuplicates :: Eq a => [a] -> [[a]]
