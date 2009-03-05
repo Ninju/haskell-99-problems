@@ -8,6 +8,14 @@ data Element a = Element a | EncodedElement Int a deriving Show
 encode' :: Eq a => [a] -> [Element a]
 encode' = map encodeElem' . group
           where
-          encodeElem' ys = case ys of
-                            [y] -> Element y
-                            _   -> EncodedElement (length ys) (head ys)
+          encodeElem' xs = case xs of
+                           [x] -> Element x
+                           _  -> EncodedElement (length xs) (head xs)
+
+-- Problem 12
+
+decode :: [Element a] -> [a]
+decode = concatMap decodeElem
+         where
+         decodeElem (Element e)          = [e]
+         decodeElem (EncodedElement n e) = replicate n e
