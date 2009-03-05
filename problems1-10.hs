@@ -28,6 +28,11 @@ listLength = foldl' (\n _ -> 1 + n) 0
 reverseList :: [a] -> [a]
 reverseList = foldl (flip (:)) []
 
+-- Problem 6
+
+isPalindrome :: Eq a => [a] -> Bool
+isPalindrome xs = xs == reverse xs
+
 -- Problem 9
 
 groupDuplicates :: Eq a => [a] -> [[a]]
