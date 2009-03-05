@@ -46,3 +46,9 @@ groupDuplicates (x:xs) = (x:duplicates) : groupDuplicates rest
                          where
                          (duplicates, rest) = span (x==) xs
 
+-- Problem 10
+
+encode :: Eq a => [a] -> [(Int, a)]
+encode xs = map encodeElem (groupDuplicates xs)
+            where
+            encodeElem ys = (length ys, head ys)
