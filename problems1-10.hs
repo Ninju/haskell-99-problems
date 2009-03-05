@@ -7,6 +7,9 @@ module Main where
 lastElement :: [a] -> a
 lastElement = head . reverse
 
+-- Problem 2
+
+secondLastElement = head . tail . reverse
 
 -- Problem 9
 
