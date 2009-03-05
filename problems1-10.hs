@@ -20,8 +20,13 @@ elementAt n = head . drop (n-1)
 
 -- Problem 4
 
-listLength :: [a] -> Integer
+listLength :: [a] -> Int
 listLength = foldl' (\n _ -> 1 + n) 0
+
+-- Problem 5
+
+reverseList :: [a] -> [a]
+reverseList = foldl (flip (:)) []
 
 -- Problem 9
 
