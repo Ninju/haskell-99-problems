@@ -23,5 +23,10 @@ decode = concatMap decodeElem
 
 -- Problem 14
 
-duplicate :: [a] -> [a]
-duplicate = concatMap (replicate 2)
+dupli :: [a] -> [a]
+dupli = concatMap (replicate 2)
+
+-- Problem 15
+
+repli :: Int -> [a] -> [a]
+repli = concatMap . replicate
