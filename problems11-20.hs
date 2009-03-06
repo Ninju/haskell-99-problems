@@ -19,3 +19,9 @@ decode = concatMap decodeElem
          where
          decodeElem (Element e)          = [e]
          decodeElem (EncodedElement n e) = replicate n e
+
+
+-- Problem 14
+
+duplicate :: [a] -> [a]
+duplicate = concatMap (replicate 2)
