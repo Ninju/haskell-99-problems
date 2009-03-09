@@ -41,3 +41,8 @@ dropEvery xs n = take (n - 1) xs ++ dropEvery (drop n xs) n
 
 split :: [a] -> Int -> ([a],[a])
 split = flip splitAt
+
+-- Problem 18
+
+slice :: [a] -> Int -> Int -> [a]
+slice xs u v = take (v - u + 1) $ drop (u - 1) xs
