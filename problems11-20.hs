@@ -21,6 +21,9 @@ decode = concatMap decodeElem
          decodeElem (EncodedElement n e) = replicate n e
 
 
+-- Problem 13
+-- I don't know what it's asking me to do.
+
 -- Problem 14
 
 dupli :: [a] -> [a]
