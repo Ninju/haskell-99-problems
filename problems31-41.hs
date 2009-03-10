@@ -16,3 +16,8 @@ isPrime n = elem n $ takeWhile (<= n) primes
 gcd' :: Integer -> Integer -> Integer
 gcd' a 0 = abs a
 gcd' a b = gcd' b (a `mod` b)
+
+-- Problem 33
+
+coprime :: Integer -> Integer -> Bool
+coprime a b = gcd a b == 1
