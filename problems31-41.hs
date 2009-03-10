@@ -1,5 +1,6 @@
 module Main where
 import Data.List (find)
+import Problems1to10 (encode)
 
 -- Problem 31
 
@@ -35,3 +36,6 @@ primeFactors n = primeFactors' n primes
                  primeFactors' n ps | n < 2 = []
                                     | otherwise = let (p:ps) = dropWhile (not . (0 ==) . mod n) primes 
                                                   in p : primeFactors' (div n p) (p:ps)
+
+primeFactorsMulti :: Integer -> [(Int, Integer)]
+primeFactorsMulti = encode . primeFactors

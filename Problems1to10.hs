@@ -1,4 +1,4 @@
-module Main where
+module Problems1to10 where
 import Data.List (foldl')
 
 -- Solutions for Problems 1-10
