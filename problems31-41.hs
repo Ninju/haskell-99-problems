@@ -1,5 +1,5 @@
 module Main where
-import Data.List (find)
+import Data.List (find, foldr)
 import Problems1to10 (encode)
 
 -- Problem 31
@@ -39,5 +39,14 @@ primeFactors n = primeFactors' n primes
 
 -- Problem 36
 
-primeFactorsMulti :: Integer -> [(Int, Integer)]
-primeFactorsMulti = encode . primeFactors
+primeFactorsMulti :: Integer -> [(Integer, Int)]
+primeFactorsMulti = map swap . encode . primeFactors
+                    where
+                    swap (x, y) = (y, x)
+
+-- Problem 37
+
+totient' :: Integer -> Integer
+totient' = foldr bam 1 . primeFactorsMulti
+           where
+           bam (p, m) acc = acc * (p - 1) * p ^ (m - 1)
