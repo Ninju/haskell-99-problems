@@ -10,3 +10,9 @@ primes = sieve [2..]
 
 isPrime :: Integer -> Bool
 isPrime n = elem n $ takeWhile (<= n) primes
+
+-- Problem 32
+
+gcd' :: Integer -> Integer -> Integer
+gcd' a 0 = abs a
+gcd' a b = gcd' b (a `mod` b)
