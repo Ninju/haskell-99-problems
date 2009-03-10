@@ -21,3 +21,8 @@ gcd' a b = gcd' b (a `mod` b)
 
 coprime :: Integer -> Integer -> Bool
 coprime a b = gcd a b == 1
+
+-- Problem 34
+
+totient :: Integer -> Integer
+totient n = length $ filter (coprime n) [1..(n - 1)]
