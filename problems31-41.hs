@@ -24,5 +24,14 @@ coprime a b = gcd a b == 1
 
 -- Problem 34
 
-totient :: Integer -> Integer
+totient :: Integer -> Int
 totient n = length $ filter (coprime n) [1..(n - 1)]
+
+-- Problem 35
+
+primeFactors :: Integer -> [Integer]
+primeFactors n = primeFactors' n primes
+                 where
+                 primeFactors' n ps | n < 2 = []
+                                    | otherwise = let (p:ps) = dropWhile (not . (0 ==) . mod n) primes 
+                                                  in p : primeFactors' (div n p) (p:ps)
