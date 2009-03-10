@@ -3,3 +3,5 @@ http://www.haskell.org/haskellwiki/H-99:_Ninety-Nine_Haskell_Problems
 == Notes ==
 
 I've mostly ignored the API specified in the problem.
+
+On problems like "write elementAt", which is basically (well, almost) defined in Haskell, I've tried to avoid using the similar function, because that would be cheating.
