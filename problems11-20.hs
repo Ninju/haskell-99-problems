@@ -49,3 +49,19 @@ split = flip splitAt
 
 slice :: [a] -> Int -> Int -> [a]
 slice xs u v = take (v - u + 1) $ drop (u - 1) xs
+
+-- Problem 19
+
+rotate :: [a] -> Int -> [a]
+rotate xs n = take (length xs) $ drop n $ cycle xs
+
+-- Problem 20
+
+removeAt :: Int -> [a] -> (Maybe a, [a])
+removeAt n xs | n < 1     = (Nothing, xs)
+              | otherwise = removeAt' n xs
+              where
+              removeAt' _ []     = (Nothing, [])
+              removeAt' 1 (x:xs) = (Just x, xs)
+              removeAt' n (x:xs) = let (y,ys) = removeAt' (n - 1) xs
+                                   in (y, x:ys)
