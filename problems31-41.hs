@@ -37,5 +37,7 @@ primeFactors n = primeFactors' n primes
                                     | otherwise = let (p:ps) = dropWhile (not . (0 ==) . mod n) primes 
                                                   in p : primeFactors' (div n p) (p:ps)
 
+-- Problem 36
+
 primeFactorsMulti :: Integer -> [(Int, Integer)]
 primeFactorsMulti = encode . primeFactors
