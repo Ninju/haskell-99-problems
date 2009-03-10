@@ -33,6 +33,14 @@ reverseList = foldl (flip (:)) []
 isPalindrome :: Eq a => [a] -> Bool
 isPalindrome xs = xs == reverse xs
 
+-- Problem 7
+
+data List a = Element a | List [List a]
+
+flatten :: List a -> [a]
+flatten (Element e) = [e]
+flatten (List xs)   = concatMap flatten xs
+
 -- Problem 8
 
 compress :: Eq a => [a] -> [a]
