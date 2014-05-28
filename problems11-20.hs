@@ -22,7 +22,23 @@ decode = concatMap decodeElem
 
 
 -- Problem 13
--- I don't know what it's asking me to do.
+encodeDirect xs = 
+  fst $
+    foldl 
+      (\(r, xs') e -> 
+        let (ds,ts) = (dropWhile (== e) xs', takeWhile (== e) xs')
+        in
+          case ts of
+            []  -> (r,ds)
+            [e] -> (r ++ [Element e], ds)
+            ts' -> (r ++ [EncodedElement (length ts') e], ds))
+      ([], xs)
+      xs
+
+        
+
+          
+      
 
 -- Problem 14
 
