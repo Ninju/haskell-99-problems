@@ -35,10 +35,6 @@ encodeDirect xs =
       ([], xs)
       xs
 
-        
-
-          
-      
 
 -- Problem 14
 
