@@ -1,4 +1,6 @@
 module Main where
+import System.Random
+import Data.List
 
 -- Problem 21
 
@@ -14,3 +16,19 @@ range x y | x > y     = []
           | otherwise = x : range (x + 1) y
 
 
+-- Problem 23
+
+takeWhileAccum :: ([a] -> Bool) -> [a] -> [a]
+takeWhileAccum f xs = 
+  takeWhileAccum' f xs []
+  where
+  takeWhileAccum' f []     accum = accum
+  takeWhileAccum' f (y:ys) accum = if f accum then takeWhileAccum' f ys (y:accum) else accum
+              
+rnd_select :: [a] -> Int -> IO [a]
+rnd_select xs n = 
+  if length xs < n
+  then return xs
+  else
+    do g <- newStdGen
+       return $ map (xs !!) $ nub $ takeWhileAccum (\result -> length (nub result) < n) $ randomRs (0, length xs - 1) g
