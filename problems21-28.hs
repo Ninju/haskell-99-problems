@@ -32,3 +32,8 @@ rnd_select xs n =
   else
     do g <- newStdGen
        return $ map (xs !!) $ nub $ takeWhileAccum (\result -> length (nub result) < n) $ randomRs (0, length xs - 1) g
+
+-- Problem 24
+
+diff_select :: Int -> Int -> IO [Int]
+diff_select n maxV = rnd_select [1..maxV] n
