@@ -37,3 +37,7 @@ rnd_select xs n =
 
 diff_select :: Int -> Int -> IO [Int]
 diff_select n maxV = rnd_select [1..maxV] n
+
+-- Problem 25
+
+rnd_permu xs = return . concat =<< rnd_select (permutations xs) 1
