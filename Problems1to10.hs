@@ -5,8 +5,8 @@ import Data.List (foldl')
 
 -- Problem 1
  
-lastElement :: [a] -> a
-lastElement = head . reverse
+myLast :: [a] -> a
+myLast = head . reverse
 
 -- Problem 2
 
