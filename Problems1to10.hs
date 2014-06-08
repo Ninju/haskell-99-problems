@@ -10,8 +10,8 @@ myLast = head . reverse
 
 -- Problem 2
 
-secondLastElement :: [a] -> a
-secondLastElement = head . tail . reverse
+myButLast :: [a] -> a
+myButLast = head . tail . reverse
 
 -- Problem 3
 
