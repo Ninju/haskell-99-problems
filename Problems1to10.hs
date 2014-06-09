@@ -20,8 +20,8 @@ elementAt n = head . drop (n-1)
 
 -- Problem 4
 
-listLength :: [a] -> Int
-listLength = foldl' (\n _ -> 1 + n) 0
+myLength :: [a] -> Int
+myLength = foldl' (\n _ -> 1 + n) 0
 
 -- Problem 5
 
