@@ -1,6 +1,7 @@
 module Main where
 import System.Random
-import Data.List
+import Data.List hiding(group)
+import Data.Graph.Inductive.Query.Monad
 
 -- Problem 21
 
@@ -50,3 +51,31 @@ combinations 0 xs     = []
 combinations 1 xs     = map (:[]) xs
 combinations n []     = []
 combinations n (x:xs) = (map (x:) $ combinations (n - 1) xs) ++ combinations n xs
+
+-- Problem 27
+
+chooseAndSplit :: Int -> [a] -> [([a], [a])]
+chooseAndSplit 0 xs     = [([], xs)]
+chooseAndSplit k []     = [([], [])]
+chooseAndSplit k (x:xs) =
+  let choicesWithX    = map (mapFst (x:)) $ chooseAndSplit (k - 1) xs
+  in
+    if k <= length xs
+    then
+      let choicesWithoutX = map (mapSnd (x:)) $ chooseAndSplit k xs
+      in
+        choicesWithoutX ++ choicesWithX
+    else choicesWithX
+
+group :: [Int] -> [a] -> [[[a]]]
+group []             _      = []
+group groupSizes     []     = []
+group (n:[])         people = map ((:[]) . fst) (chooseAndSplit n people)
+group (n:groupSizes) people =
+  let firstGroupChoices = chooseAndSplit n people
+  in
+    foldr
+      (\(firstGroupChoice, others) res ->
+         res ++ map (firstGroupChoice:) (group groupSizes others))
+      []
+      firstGroupChoices
