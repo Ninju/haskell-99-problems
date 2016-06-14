@@ -50,3 +50,12 @@ totient' :: Integer -> Integer
 totient' = foldr bam 1 . primeFactorsMulti
            where
            bam (p, m) acc = acc * (p - 1) * p ^ (m - 1)
+
+-- Problem 38
+
+-- Not a coding problem
+
+-- Problem 39
+
+primesR :: Integer -> Integer -> [Integer]
+primesR a b = dropWhile (< a) . takeWhile (<= b) $ primes
