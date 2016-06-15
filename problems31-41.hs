@@ -59,3 +59,19 @@ totient' = foldr bam 1 . primeFactorsMulti
 
 primesR :: Integer -> Integer -> [Integer]
 primesR a b = dropWhile (< a) . takeWhile (<= b) $ primes
+
+-- Problem 40
+
+goldbach :: Integer -> (Integer, Integer)
+goldbach n =
+  let primes' = takeWhile (< n) primes
+  in
+    case findPair primes' of
+      Nothing -> error "It must be possible for small, even n"
+      Just (a,b) -> (a,b)
+  where
+  findPair [] = Nothing
+  findPair (p:ps) = 
+    case find ((n - p) ==) ps >>= \v -> Just (p, v) of
+      Nothing -> findPair ps
+      result -> result
