@@ -75,3 +75,11 @@ goldbach n =
     case find ((n - p) ==) ps >>= \v -> Just (p, v) of
       Nothing -> findPair ps
       result -> result
+
+-- Problem 41
+
+goldbachList :: Integer -> Integer -> [(Integer, Integer)]
+goldbachList lower upper 
+  | (lower `mod` 2) /= 0 = goldbachList (lower + 1) upper
+  | lower > upper = []
+  | otherwise = goldbach lower : goldbachList (lower + 2) upper
