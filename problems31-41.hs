@@ -62,19 +62,23 @@ primesR a b = dropWhile (< a) . takeWhile (<= b) $ primes
 
 -- Problem 40
 
-goldbach :: Integer -> (Integer, Integer)
-goldbach n =
+maybeGoldbach :: Integer -> Maybe (Integer, Integer)
+maybeGoldbach n =
   let primes' = takeWhile (< n) primes
   in
-    case findPair primes' of
-      Nothing -> error "It must be possible for small, even n"
-      Just (a,b) -> (a,b)
+    findPair primes'
   where
   findPair [] = Nothing
   findPair (p:ps) = 
-    case find ((n - p) ==) ps >>= \v -> Just (p, v) of
+    case find ((n - p) ==) (p:ps) >>= \v -> Just (p, v) of
       Nothing -> findPair ps
       result -> result
+
+goldbach :: Integer -> (Integer, Integer)
+goldbach n =
+  case maybeGoldbach n of
+    Nothing -> error "Must be true for all small even n"
+    Just (a,b) -> (a,b)
 
 -- Problem 41
 
