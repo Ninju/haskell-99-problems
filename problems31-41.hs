@@ -90,7 +90,9 @@ goldbachList lower upper
   | lower > upper = []
   | otherwise = goldbach lower : goldbachList (lower + 2) upper
 
-goldbachList' lower upper lowerPrime =
-  let biggerThanLowerPrime = (>= lowerPrime)
-  in
-    filter (andP biggerThanLowerPrime biggerThanLowerPrime) $ goldbachList lower upper
+goldbachList' lower upper lowerPrime
+  | lowerPrime * 2 > lower = goldbachList' (lowerPrime * 2) upper lowerPrime
+  | otherwise =
+    let biggerThanLowerPrime = (>= lowerPrime)
+    in
+      filter (andP biggerThanLowerPrime biggerThanLowerPrime) $ goldbachList lower upper
