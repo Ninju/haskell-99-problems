@@ -58,3 +58,7 @@ tablen n logicF =
   where
   buildRow f = \xs -> xs ++ [f xs]
   showTableRow xs = intercalate " " $ map showBool xs
+
+-- Problem 49
+
+gray n = generateCombinations n ['0', '1']
