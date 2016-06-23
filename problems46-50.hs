@@ -45,11 +45,9 @@ choose (xs:xss) =
        x         <- xs
        [x:subChoice]
 
-copy n xs = map (const xs) [1..n]
-
 generateCombinations :: Int -> [a] -> [[a]]
 generateCombinations n values =
-  let allChoices = copy n values
+  let allChoices = take n $ cycle [values]
   in
     choose allChoices
 
