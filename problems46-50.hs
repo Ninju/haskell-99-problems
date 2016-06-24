@@ -1,6 +1,8 @@
 module Main where
 import Prelude hiding (and, or)
-import Data.List (intercalate)
+import Data.List (intercalate, sortBy)
+import Data.Ord (comparing)
+import Data.Graph.Inductive.Query.Monad (mapFst, mapSnd)
 
 -- Problem 46
 
@@ -61,3 +63,43 @@ tablen n logicF =
 -- Problem 49
 
 gray n = generateCombinations n ['0', '1']
+
+-- Problem 50
+
+data BinaryTree a = BinaryTree a (BinaryTree a) (BinaryTree a) | BinaryTreeLeaf a deriving Show
+type HuffmanTree = BinaryTree (Maybe Char, Integer)
+
+huffmanFreqAtNode (BinaryTreeLeaf (_, freq)) = freq
+huffmanFreqAtNode (BinaryTree (_, freq) _ _) = freq
+
+-- assumes initial list is already sorted by frequency
+-- TODO: do a faster insert by using the fact that the list is sorted
+constructHuffmanTree' :: [HuffmanTree] -> HuffmanTree
+constructHuffmanTree' []               = error "Can not construct from empty list"
+constructHuffmanTree' [t]              = t
+constructHuffmanTree' (f:g:fs) =
+  let newSubTree = BinaryTree (Nothing, huffmanFreqAtNode f + huffmanFreqAtNode g) f g
+  in
+    constructHuffmanTree' $ sortBy (comparing huffmanFreqAtNode) (newSubTree:fs)
+
+constructHuffmanTree :: [HuffmanTree] -> HuffmanTree
+constructHuffmanTree [] = error "Can not construct from empty list"
+constructHuffmanTree ts = let ts' = sortBy (comparing huffmanFreqAtNode) ts in constructHuffmanTree' ts'
+
+buildHuffmanTree :: [(Char, Integer)] -> HuffmanTree
+buildHuffmanTree xs = constructHuffmanTree $ map (BinaryTreeLeaf . mapFst Just) xs
+
+buildHuffmanCodes tree currentSearchPath =
+  case tree of
+    BinaryTreeLeaf (Just chr, _) -> (chr, currentSearchPath) : []
+    BinaryTree _ left right      ->
+      let leftCodes  = buildHuffmanCodes left  ('0':currentSearchPath)
+          rightCodes = buildHuffmanCodes right ('1':currentSearchPath)
+      in
+        leftCodes ++ rightCodes
+
+huffman :: [(Char, Integer)] -> [(Char, String)]
+huffman xs =
+  let tree = buildHuffmanTree xs
+  in
+    buildHuffmanCodes tree ""
