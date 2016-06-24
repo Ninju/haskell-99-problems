@@ -3,6 +3,7 @@ import Prelude hiding (and, or)
 import Data.List (intercalate, sortBy)
 import Data.Ord (comparing)
 import Data.Graph.Inductive.Query.Monad (mapFst, mapSnd)
+import Data.Tuple (swap)
 
 -- Problem 46
 
@@ -67,32 +68,32 @@ gray n = generateCombinations n ['0', '1']
 -- Problem 50
 
 data BinaryTree a = BinaryTree a (BinaryTree a) (BinaryTree a) | BinaryTreeLeaf a deriving Show
-type HuffmanTree = BinaryTree (Maybe Char, Integer)
+data HuffmanTree a = HuffmanTree Integer (HuffmanTree a) (HuffmanTree a) | HuffmanLeaf Integer a deriving Show
 
-huffmanFreqAtNode (BinaryTreeLeaf (_, freq)) = freq
-huffmanFreqAtNode (BinaryTree (_, freq) _ _) = freq
+huffmanFreqAtNode (HuffmanLeaf freq _  ) = freq
+huffmanFreqAtNode (HuffmanTree freq _ _) = freq
 
 -- assumes initial list is already sorted by frequency
 -- TODO: do a faster insert by using the fact that the list is sorted
-constructHuffmanTree' :: [HuffmanTree] -> HuffmanTree
+constructHuffmanTree' :: [HuffmanTree a] -> HuffmanTree a
 constructHuffmanTree' []               = error "Can not construct from empty list"
 constructHuffmanTree' [t]              = t
 constructHuffmanTree' (f:g:fs) =
-  let newSubTree = BinaryTree (Nothing, huffmanFreqAtNode f + huffmanFreqAtNode g) f g
+  let newSubTree = HuffmanTree (huffmanFreqAtNode f + huffmanFreqAtNode g) f g
   in
     constructHuffmanTree' $ sortBy (comparing huffmanFreqAtNode) (newSubTree:fs)
 
-constructHuffmanTree :: [HuffmanTree] -> HuffmanTree
+constructHuffmanTree :: [HuffmanTree a] -> HuffmanTree a
 constructHuffmanTree [] = error "Can not construct from empty list"
 constructHuffmanTree ts = let ts' = sortBy (comparing huffmanFreqAtNode) ts in constructHuffmanTree' ts'
 
-buildHuffmanTree :: [(Char, Integer)] -> HuffmanTree
-buildHuffmanTree xs = constructHuffmanTree $ map (BinaryTreeLeaf . mapFst Just) xs
+buildHuffmanTree :: [(Char, Integer)] -> HuffmanTree Char
+buildHuffmanTree xs = constructHuffmanTree $ map (uncurry HuffmanLeaf . swap) xs
 
 buildHuffmanCodes tree currentSearchPath =
   case tree of
-    BinaryTreeLeaf (Just chr, _) -> (chr, currentSearchPath) : []
-    BinaryTree _ left right      ->
+    HuffmanLeaf _ chr        -> (chr, currentSearchPath) : []
+    HuffmanTree _ left right ->
       let leftCodes  = buildHuffmanCodes left  ('0':currentSearchPath)
           rightCodes = buildHuffmanCodes right ('1':currentSearchPath)
       in
