@@ -74,16 +74,16 @@ huffmanFreqAtNode (HuffmanTree freq _ _) = freq
 
 -- assumes initial list is already sorted by frequency
 -- TODO: do a faster insert by using the fact that the list is sorted
-constructHuffmanTree' :: [HuffmanTree a] -> HuffmanTree a
-constructHuffmanTree' []               = error "Can not construct from empty list"
-constructHuffmanTree' [t]              = t
-constructHuffmanTree' (f:g:fs) =
+constructHuffmanTree :: [HuffmanTree a] -> HuffmanTree a
+constructHuffmanTree []               = error "Can not construct from empty list"
+constructHuffmanTree [t]              = t
+constructHuffmanTree (f:g:fs) =
   let newSubTree = HuffmanTree (huffmanFreqAtNode f + huffmanFreqAtNode g) f g
   in
-    constructHuffmanTree' $ sortBy (comparing huffmanFreqAtNode) (newSubTree:fs)
+    constructHuffmanTree $ sortBy (comparing huffmanFreqAtNode) (newSubTree:fs)
 
 buildHuffmanTree :: [(Char, Integer)] -> HuffmanTree Char
-buildHuffmanTree xs = constructHuffmanTree' $ map (uncurry HuffmanLeaf . swap) $ sortBy (comparing snd) xs
+buildHuffmanTree xs = constructHuffmanTree $ map (uncurry HuffmanLeaf . swap) $ sortBy (comparing snd) xs
 
 buildHuffmanCodes tree currentSearchPath =
   case tree of
