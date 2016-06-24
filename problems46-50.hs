@@ -1,6 +1,6 @@
 module Main where
 import Prelude hiding (and, or)
-import Data.List (intercalate, sortBy)
+import Data.List (intercalate, sortBy, insertBy)
 import Data.Ord (comparing)
 import Data.Graph.Inductive.Query.Monad (mapFst, mapSnd)
 import Data.Tuple (swap)
@@ -72,6 +72,8 @@ data HuffmanTree a = HuffmanTree Integer (HuffmanTree a) (HuffmanTree a) | Huffm
 huffmanFreqAtNode (HuffmanLeaf freq _  ) = freq
 huffmanFreqAtNode (HuffmanTree freq _ _) = freq
 
+
+
 -- assumes initial list is already sorted by frequency
 -- TODO: do a faster insert by using the fact that the list is sorted
 constructHuffmanTree :: [HuffmanTree a] -> HuffmanTree a
@@ -80,7 +82,7 @@ constructHuffmanTree [t]              = t
 constructHuffmanTree (f:g:fs) =
   let newSubTree = HuffmanTree (huffmanFreqAtNode f + huffmanFreqAtNode g) f g
   in
-    constructHuffmanTree $ sortBy (comparing huffmanFreqAtNode) (newSubTree:fs)
+    constructHuffmanTree $ insertBy (comparing huffmanFreqAtNode) newSubTree fs
 
 buildHuffmanTree :: [(Char, Integer)] -> HuffmanTree Char
 buildHuffmanTree xs = constructHuffmanTree $ map (uncurry HuffmanLeaf . swap) $ sortBy (comparing snd) xs
