@@ -34,7 +34,8 @@ table logicF = mapM (putStrLn . showTableRow . buildRow logicF) booleanCombos
                showTableRow (a,b,c) = showBool a ++ " " ++ showBool b ++ " " ++ showBool c
 
 -- Problem 48
-
+-- choose all combinations of 1 from each sub array
+-- choose [[a,b], [c,d]] == [[a,c], [a,d], [b,c], [b,d]]
 choose :: [[a]] -> [[a]]
 choose []       = []
 choose (xs:[])  = map (:[]) xs
