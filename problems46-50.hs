@@ -67,7 +67,6 @@ gray n = generateCombinations n ['0', '1']
 
 -- Problem 50
 
-data BinaryTree a = BinaryTree a (BinaryTree a) (BinaryTree a) | BinaryTreeLeaf a deriving Show
 data HuffmanTree a = HuffmanTree Integer (HuffmanTree a) (HuffmanTree a) | HuffmanLeaf Integer a deriving Show
 
 huffmanFreqAtNode (HuffmanLeaf freq _  ) = freq
