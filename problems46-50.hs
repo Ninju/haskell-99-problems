@@ -82,12 +82,8 @@ constructHuffmanTree' (f:g:fs) =
   in
     constructHuffmanTree' $ sortBy (comparing huffmanFreqAtNode) (newSubTree:fs)
 
-constructHuffmanTree :: [HuffmanTree a] -> HuffmanTree a
-constructHuffmanTree [] = error "Can not construct from empty list"
-constructHuffmanTree ts = let ts' = sortBy (comparing huffmanFreqAtNode) ts in constructHuffmanTree' ts'
-
 buildHuffmanTree :: [(Char, Integer)] -> HuffmanTree Char
-buildHuffmanTree xs = constructHuffmanTree $ map (uncurry HuffmanLeaf . swap) xs
+buildHuffmanTree xs = constructHuffmanTree' $ map (uncurry HuffmanLeaf . swap) $ sortBy (comparing snd) xs
 
 buildHuffmanCodes tree currentSearchPath =
   case tree of
