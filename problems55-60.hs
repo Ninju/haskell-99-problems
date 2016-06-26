@@ -36,3 +36,14 @@ cbalTree n =
   let insertPaths = take n $ foldr (\n combos -> nChoices n [LeftBranch, RightBranch] ++ combos) [] [1..]
   in
     foldl (\tree path -> treePathInsert tree path 'x') Empty insertPaths
+
+-- Problem 56
+
+mirror lTree rTree =
+  case (lTree, rTree) of
+    (Empty,        Empty)          -> True
+    (Branch _ l r, Branch _ l' r') -> mirror l r' && mirror r l'
+    _                              -> False
+
+symmetric Empty = True
+symmetric (Branch _ l r) = mirror l r
