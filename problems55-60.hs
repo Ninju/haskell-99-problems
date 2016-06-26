@@ -39,11 +39,9 @@ cbalTree n =
 
 -- Problem 56
 
-mirror lTree rTree =
-  case (lTree, rTree) of
-    (Empty,        Empty)          -> True
-    (Branch _ l r, Branch _ l' r') -> mirror l r' && mirror r l'
-    _                              -> False
+mirror Empty          Empty            = True
+mirror (Branch _ l r) (Branch _ l' r') = mirror l r' && mirror r l'
+mirror _              _                = False
 
 symmetric Empty = True
 symmetric (Branch _ l r) = mirror l r
