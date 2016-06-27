@@ -45,3 +45,19 @@ mirror _              _                = False
 
 symmetric Empty = True
 symmetric (Branch _ l r) = mirror l r
+
+-- Problem 57
+
+add :: Ord a => a -> Tree a -> Tree a
+add x Empty            = leaf x
+add x t@(Branch y l r) =
+  case compare x y of
+    EQ -> t
+    GT -> Branch y l (add x r)
+    LT -> Branch y (add x l) r
+
+construct :: Ord a => [a] -> Tree a
+construct = foldl (flip add) Empty
+
+testSymmetric :: Ord a => [a] -> Bool
+testSymmetric = symmetric . construct
